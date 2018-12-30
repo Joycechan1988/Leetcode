@@ -1,15 +1,31 @@
 package com.chenhuan.leetcode;
 
 public class KthSmallestInBST230 {
+    int count;
+    int val;
+    public int kthSmallestRecursiveBFS(TreeNode root, int k) {
+        inorderRecursive(root, k);
+        return val;
+    }
 
-    public int kthSmallest(TreeNode root, int k) {
+    void inorderRecursive (TreeNode node, int k) {
+        if (node == null) return;
+        inorderRecursive(node.left, k);
+        if (++count == k) {
+            val = node.val;
+        }
+        inorderRecursive(node.right, k);
+    }
+
+
+    public int kthSmallestDFS(TreeNode root, int k) {
         int leftCount = countOfNode(root.left);
         if (leftCount+1 == k) {
             return root.val;
         } else if (leftCount >= k) {
-            return kthSmallest(root.left , k);
+            return kthSmallestDFS(root.left , k);
         } else {
-            return kthSmallest(root.right, k - leftCount -1);
+            return kthSmallestDFS(root.right, k - leftCount -1);
         }
     }
 
